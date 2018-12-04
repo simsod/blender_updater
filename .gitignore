@@ -1,0 +1,114 @@
+#vNext stuff
+artifacts/
+*.sln.ide/
+bower_components/
+node_modules/
+[Bb]uild/
+.brackets.json
+**/wwwroot/js/
+**/wwwroot/fonts/
+**/wwwroot/css/
+**/wwwroot/images/
+**/wwwroot/svg/
+**/wwwroot/favicons/
+**/wwwroot/i18n/
+**/wwwroot/vendor/
+**/wwwroot/tests/
+**/rev-manifest.json
+.vs/
+tmp/
+_references.js
+project.lock.json
+*.override.json
+.idea/
+*.iml
+yarn.lock
+yarn-error.log
+package-lock.json
+coverage/
+src/Saga.Web/Properties/launchSettings.json
+src/Saga.Web.SharedAuth/Properties/launchSettings.json
+
+#Website distribution
+[Dd]ist/
+
+#RazorGenerator generated files
+*.generated.cs
+
+#Node modules
+node_modules/
+yeoman-app/
+
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#Visual Studio files
+*.[Oo]bj
+*.user
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.[Cc]ache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.sdf
+*.opensdf
+*.unsuccessfulbuild
+ipch/
+obj/
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/
+Ankh.NoLoad
+
+#MonoDevelop
+*.pidb
+*.userprefs
+
+#Tooling
+_ReSharper*/
+*.resharper
+[Tt]est[Rr]esult*
+*.sass-cache
+
+#Project files
+[Bb]uild/
+
+#Subversion files
+.svn
+
+# Office Temp Files
+~$*
+
+#NuGet
+packages/
+
+#ncrunch
+*ncrunch*
+*crunch*.local.xml
+
+# visual studio database projects
+*.dbmdl
+
+#Test files
+TestResult.xml
+*.testsettings
+*.swp
+test-results
+tags
+test.txt
+
+# Cake-tools
+tools/*
+!tools/package.config
