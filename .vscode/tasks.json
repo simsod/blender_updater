@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/BlenderUpdater.csproj"
+                "${workspaceFolder}/src/BlenderUpdater/BlenderUpdater.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

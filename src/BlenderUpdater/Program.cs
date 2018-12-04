@@ -179,6 +179,8 @@ namespace BlenderUpdater {
             Console.WriteLine("Unpacking file");
             var zipFile = new ZipFile(archiveFile);
             var dir = Path.GetDirectoryName(zipFile[0].Name);
+            dir = dir.Split(Path.DirectorySeparatorChar,StringSplitOptions.RemoveEmptyEntries).First();
+
 
             var fz = new FastZip();
             fz.ExtractZip(archiveFile, outputDir, "");

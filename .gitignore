@@ -26,8 +26,8 @@ yarn.lock
 yarn-error.log
 package-lock.json
 coverage/
-src/Saga.Web/Properties/launchSettings.json
-src/Saga.Web.SharedAuth/Properties/launchSettings.json
+out/
+download/
 
 #Website distribution
 [Dd]ist/
