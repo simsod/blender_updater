@@ -168,18 +168,27 @@ namespace BlenderUpdater {
                 }
 
                 var process = new ProcessStartInfo("ln", $"-s {extractedPath} {latestPath}");
-
                 Process.Start(process);
+
+                var executablePath = extractedPath + "/blender.app/Contents/MacOS/blender";
+                OsxUpdatePermissions(executablePath);
+
             } else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
-                var latestPath = Path.GetFullPath("out/latest");                
+                var latestPath = Path.GetFullPath("out/latest");
                 JunctionPoint.Create(latestPath, extractedPath, true);
             }
         }
+
+        static void OsxUpdatePermissions(string executablePath) {
+            var p = new ProcessStartInfo("chmod", $"+x {executablePath}");
+            Process.Start(p);
+        }
+
         static string Unzip(string archiveFile, string outputDir) {
             Console.WriteLine("Unpacking file");
             var zipFile = new ZipFile(archiveFile);
             var dir = Path.GetDirectoryName(zipFile[0].Name);
-            dir = dir.Split(Path.DirectorySeparatorChar,StringSplitOptions.RemoveEmptyEntries).First();
+            dir = dir.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries).First();
 
 
             var fz = new FastZip();
