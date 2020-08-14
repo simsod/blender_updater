@@ -1,5 +1,6 @@
 #vNext stuff
 artifacts/
+.vscode/
 *.sln.ide/
 bower_components/
 node_modules/
