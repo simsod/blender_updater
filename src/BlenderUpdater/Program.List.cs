@@ -12,6 +12,7 @@ namespace BlenderUpdater
 {
     partial class Program
     {
+        
 
         static int RunListAndReturnExitCode(ListOptions options)
         {
@@ -19,7 +20,10 @@ namespace BlenderUpdater
             AnsiConsole.WriteLine();
 
             var client = new BlenderOrgClient();
-            var result = client.GetAvailableVersions().GetAwaiter().GetResult().ToList();
+            var result = client.GetAvailableVersions( experimentalBranches: options.Experimental)
+                .GetAwaiter().GetResult()
+                .OrderByDescending(x=>x.BuildDate)
+                .ToList();
 
             if (!string.IsNullOrEmpty(options.Branch))
             {
@@ -39,7 +43,7 @@ namespace BlenderUpdater
                 AddVersionLine(table, res);
             }
 
-            AnsiConsole.Render(table);
+            AnsiConsole.Write(table);
 
             return 0;
         }

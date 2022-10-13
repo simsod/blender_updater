@@ -29,6 +29,7 @@ package-lock.json
 coverage/
 out/
 download/
+artifacts/
 
 #Website distribution
 [Dd]ist/
