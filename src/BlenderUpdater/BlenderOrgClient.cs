@@ -15,7 +15,7 @@ namespace BlenderUpdater {
         public async Task<IEnumerable<BlenderVersion>> GetAvailableVersions(bool experimentalBranches = false) {
             var config = AngleSharp.Configuration.Default.WithDefaultLoader();
             var url = experimentalBranches
-                ? "https://builder.blender.org/download/branches/"
+                ? "https://builder.blender.org/download/experimental/"
                 : "https://builder.blender.org/download/daily/";
 
             var doc = await BrowsingContext.New(config).OpenAsync(url);
@@ -30,7 +30,7 @@ namespace BlenderUpdater {
                 result.Add(blenderVersion);
             }
 
-            result = result.Where(x=>Path.GetExtension(x.DownloadUrl.LocalPath) == ".zip").ToList();
+            //result = result.Where(x=>Path.GetExtension(x.DownloadUrl.LocalPath) == ".zip").ToList();
             return result;
         }
 

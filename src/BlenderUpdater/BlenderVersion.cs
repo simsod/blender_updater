@@ -10,7 +10,7 @@ namespace BlenderUpdater {
         public DateTime BuildDate { get; set; }
         public string Size { get; set; }
 
-        public override string ToString() {
+        public override string ToString() {            
             return $"{OperatingSystem} {Tag} {Version} {Architecture} {Size} {BuildDate.ToString("yyyy-MM-dd hh:mm")}";
         }
     }

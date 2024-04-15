@@ -76,15 +76,14 @@ namespace BlenderUpdater {
         static void SymlinkLatest(string extractedPath, string latestLinkPath) {
             AnsiConsole.WriteLine("Updating \"latest\" symlink");
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
-                var latestPath = Path.GetFullPath("out/latest");
-                if (Directory.Exists(latestPath)) {
-                    Directory.Delete(latestPath);
+                if (Directory.Exists(latestLinkPath)) {
+                    Directory.Delete(latestLinkPath);
                 }
 
-                var process = new ProcessStartInfo("ln", $"-s {extractedPath} {latestPath}");
+                var process = new ProcessStartInfo("ln", $"-s {extractedPath} {latestLinkPath}");
                 Process.Start(process);
 
-                var executablePath = extractedPath + "/blender.app/Contents/MacOS/blender";
+                var executablePath = extractedPath + "/Blender/Blender.app/Contents/MacOS/blender";
                 OsxUpdatePermissions(executablePath);
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
@@ -117,6 +116,31 @@ namespace BlenderUpdater {
 
 
             return Path.Join(outputDir, dir);
+        }
+
+        static string Un7zip(string archiveFile, string outputDir) {
+            var dir = Path.GetFileNameWithoutExtension(archiveFile);
+            dir = Path.Join(outputDir, dir);
+            AnsiConsole.Progress()
+                .AutoClear(false)
+                .Columns(new ProgressColumn[] {
+                    new TaskDescriptionColumn(),
+                    new SpinnerColumn(),
+                })
+                .Start(context => {
+                    var task = context.AddTask("Unpacking:");
+                    var process = new ProcessStartInfo("7zz", $"x \"{archiveFile}\" -o\"{dir}\" -y")
+                        {
+                            RedirectStandardOutput = true,
+                            RedirectStandardError = true,
+                            UseShellExecute = false
+                        };
+                    var p = Process.Start(process);
+                    p.WaitForExit();
+                    task.StopTask();
+                });
+            
+            return dir;
         }
     }
 }

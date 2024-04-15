@@ -32,7 +32,7 @@ namespace BlenderUpdater
 
             if (!string.IsNullOrEmpty(options.OperatingSystem))
             {
-                result = result.Where(x => x.OperatingSystem == options.OperatingSystem).ToList();
+                result = result.Where(x => string.Equals(x.OperatingSystem, options.OperatingSystem, StringComparison.CurrentCultureIgnoreCase)).ToList();
             }
 
             var table = new Table();

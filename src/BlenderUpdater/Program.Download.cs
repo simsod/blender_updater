@@ -64,9 +64,10 @@ namespace BlenderUpdater {
 
             if (!Directory.Exists(DownloadFolder))
                 Directory.CreateDirectory(DownloadFolder);
-            var zipFilePath = Path.Combine($"{DownloadFolder}", Path.GetFileName(final.DownloadUrl.ToString()));
+            
+            var filePath = Path.Combine($"{DownloadFolder}", Path.GetFileName(final.DownloadUrl.ToString()));
 
-            if (!File.Exists(zipFilePath)) {
+            if (!File.Exists(filePath)) {
                 AnsiConsole.Progress()
                     .AutoClear(false)
                     .Columns(new ProgressColumn[] {
@@ -77,7 +78,7 @@ namespace BlenderUpdater {
                     })
                     .Start(context => {
                         var task = context.AddTask("Downloading:");
-                        client.DownloadVersion(final, zipFilePath, (progress) => {
+                        client.DownloadVersion(final, filePath, (progress) => {
                             var percentage = (int) (progress.Percentage * 100);
                             var diff = percentage - task.Value;
                             var speed = ByteSize.FromBytes(progress.BytesPerSecond.GetValueOrDefault(0)).ToString();
@@ -95,11 +96,26 @@ namespace BlenderUpdater {
                 Directory.CreateDirectory(OutFolder);
             }
 
-            var fullOutput = Unzip(archiveFile: zipFilePath, outputDir: OutFolder);
+            var fi = new FileInfo(filePath);
+
+            string fullOutput = string.Empty;
+
+            if (fi.Extension == ".zip")
+                fullOutput = Unzip(archiveFile: filePath, outputDir: OutFolder);
+            
+            if(fi.Extension == ".dmg")
+                fullOutput = Un7zip(archiveFile:filePath, outputDir:OutFolder);
+            
+            if (string.IsNullOrEmpty(fullOutput)) {
+                AnsiConsole.WriteLine("Unknown archive type");
+                return 1;
+            }
+            
             if (!options.Experimental)
                 SymlinkLatest(extractedPath: fullOutput, latestLinkPath: Path.Join(OutFolder, LATEST_DIR_NAME));
             else
                 SymlinkLatest(fullOutput, Path.Join(OutFolder, final.Tag));
+            
             AnsiConsole.WriteLine("Finished!");
 
             if (options.RunClean) {
